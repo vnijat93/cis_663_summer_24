@@ -187,9 +187,11 @@ class ProcessAudio:
         else:
             file_data = pd.read_csv(input_file)
 
+        # Grabs the unique celebrity names and how many audio files there are
+        # per speaker
         unique_names = file_data[
             "speaker"
-        ].value_counts()  # Grabs the unique celebrity names and how many audio files there are per speaker
+        ].value_counts()
         speaker_name = unique_names.index[input_select]
         speaker_name = speaker_name.replace(" ", "_").lower()
 
