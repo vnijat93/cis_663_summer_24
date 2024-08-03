@@ -9,8 +9,15 @@ matplotlib = "*"
 pyaudio = "*"
 scikit-learn = "*"
 librosa = "*"
+seaborn = "*"
+python-speech-features = "*"
+pymilvus = "*"
+torch = "*"
 
 [dev-packages]
+ipykernel = "*"
+black = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.11"
