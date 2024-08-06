@@ -1,14 +1,14 @@
 import os
 from process_audio import ProcessAudio
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+# from sklearn.model_selection import train_test_split
+# from sklearn.ensemble import RandomForestClassifier
 
 # File paths for exports and imports of data
-current_dir = os.path.dirname(os.path.abspath(__file__)).strip('voice_recognition')
-common_voice_data = os.path.join(current_dir, 'Sources and References/Data Sets/cv-corpus-17.0-2024-03-15/en/validated.tsv')
-deepfake_data = os.path.join(current_dir, 'Sources and References/Data Sets/release_in_the_wild/meta.csv')
-deepfake_data_dir = os.path.join(current_dir, 'Sources and References/Data Sets/release_in_the_wild')
-common_voice_data_dir = os.path.join(current_dir, 'Sources and References/Data Sets/cv-corpus-17.0-2024-03-15/en/clips')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# common_voice_data = os.path.join(current_dir, 'Sources and References/Data Sets/cv-corpus-17.0-2024-03-15/en/validated.tsv')
+deepfake_data = os.path.join(current_dir, 'Data/release_in_the_wild/meta.csv')
+deepfake_data_dir = os.path.join(current_dir, 'Data/release_in_the_wild')
+# common_voice_data_dir = os.path.join(current_dir, 'Sources and References/Data Sets/cv-corpus-17.0-2024-03-15/en/clips')
 # export_csv = os.path.join(current_dir, 'voice_recognition/barack_obama_voice_export.csv')
 
 # Init audio processing class
@@ -22,10 +22,11 @@ audio_data = ProcessAudio(mfcc_coefficients=13)
 # deepfake_audio_files = audio_data.get_deepfake_audio_file_data(deepfake_data, condense_size=100)
 # audio_data.load_and_export_voice_data(data=deepfake_audio_files, audio_file_directory=deepfake_data, output_location=export_csv)
 
-deepfake_audio_files, speaker_name = audio_data.get_in_the_wild_audio_file_data(deepfake_data, condense_size=1000, input_select=0)
-output_location = 'voice_recognition/' + speaker_name + '_deepfake_voice_export_filtered.csv'
-export_csv = os.path.join(current_dir, output_location)
-audio_data.load_and_export_in_the_wild_data(data=deepfake_audio_files, audio_file_directory=deepfake_data_dir, output_location=export_csv)
+for i in range(0, 20):  # Get top 20 people from deepfake dataset
+    deepfake_audio_files, speaker_name = audio_data.get_in_the_wild_audio_file_data(deepfake_data, condense_size=1000, input_select=i)
+    output_location = 'Data/voice_recognition/' + speaker_name + '_deepfake_voice_export_filtered.csv'
+    export_csv = os.path.join(current_dir, output_location)
+    audio_data.load_and_export_in_the_wild_data(data=deepfake_audio_files, audio_file_directory=deepfake_data_dir, output_location=export_csv)
 
 # Directory structure where each subdirectory corresponds to a class (e.g., /data/class1 or /data/class2
 # class_names = ['class1', 'class2', ...]
